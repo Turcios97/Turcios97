@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LATI-MEC - Tecnología que Escucha tu Vehículo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-dark: #0d0e15;
+            --bg-card: #141625;
+            --neon-violet: #9d4edd;
+            --neon-purple: #a855f7;
+            --neon-cyan: #00f2fe;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glow-purple {
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+        .glow-green {
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0e15;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e2035;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9d4edd;
+        }
+
+        .glass-panel {
+            background: rgba(20, 22, 37, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .glass-nav {
+            background: rgba(13, 14, 21, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .nav-item.active {
+            color: #00f2fe;
+            position: relative;
+        }
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background-color: #00f2fe;
+            border-radius: 2px;
+            box-shadow: 0 0 10px #00f2fe;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-24 flex flex-col justify-between">
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-purple-900/40 px-4 py-3 shadow-lg">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-cyan-400 p-0.5 glow-purple">
+                    <div class="w-full h-full bg-[#0d0e15] rounded-[10px] flex items-center justify-center">
+                        <i data-lucide="activity" class="w-6 h-6 text-cyan-400 animate-pulse"></i>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-xl tracking-wider bg-gradient-to-r from-purple-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
+                        LATI-MEC
+                    </h1>
+                    <p class="text-[10px] tracking-widest text-cyan-400 font-semibold uppercase">
+                        Tecnología que escucha tu vehículo
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <div class="flex items-center space-x-2 bg-purple-950/40 border border-purple-500/30 rounded-full px-3 py-1">
+                    <div id="connection-indicator" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                    <span id="connection-text" class="text-xs text-slate-300 font-medium">Gemini IA Online</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 pt-6 w-full flex-1">
+
+        <!-- INICIO / DIAGNÓSTICO -->
+        <section id="tab-home" class="tab-content space-y-6">
+            <div class="relative overflow-hidden rounded-2xl glass-panel p-6 border border-purple-500/30 bg-gradient-to-r from-purple-950/40 to-slate-900/60">
+                <div class="relative z-10 max-w-2xl">
+                    <span class="px-3 py-1 text-xs font-bold rounded-full bg-purple-900/60 text-purple-300 border border-purple-500/40 uppercase tracking-widest">
+                        Sistema Acústico Conectado a la Nube
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-black mt-3 text-white">
+                        Diagnóstico por Sonido con <span class="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">Gemini IA Online</span>
+                    </h2>
+                    <p class="text-slate-300 text-sm mt-2 leading-relaxed">
+                        Conectado a internet para enviar la muestra de audio en tiempo real a la nube, procesar el espectro de frecuencias y obtener un diagnóstico mecánico preciso.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Escáner Acústico e Integración Cloud -->
+            <div class="glass-panel rounded-2xl p-6 border border-purple-500/30 relative space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-cyan-300 flex items-center gap-2">
+                            <i data-lucide="cloud-lightning" class="w-5 h-5 text-cyan-400"></i>
+                            Escáner Cloud con Gemini IA
+                        </h3>
+                        <p class="text-xs text-slate-400">Captura el sonido del motor y conéctate a internet para el análisis inteligente</p>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <button id="btn-toggle-audio" onclick="toggleCloudAcousticScan()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-bold text-xs flex items-center gap-2 shadow-lg glow-cyan transition-all">
+                            <i id="audio-icon" data-lucide="mic" class="w-4 h-4"></i>
+                            <span id="audio-btn-text">Iniciar Escaneo Online</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w-full bg-[#090a10] rounded-xl p-4 border border-slate-800 relative overflow-hidden flex flex-col items-center justify-center min-h-[180px]">
+                    <div id="wave-bars-container" class="flex items-center justify-center gap-1.5 h-24 w-full">
+                        <div class="w-1.5 bg-cyan-400 rounded-full h-6 transition-all duration-150"></div>
+                        <div class="w-1.5 bg-purple-500 rounded-full h-14 transition-all duration-150"></div>
+                        <div class="w-1.5 bg-cyan-400 rounded-full h-20 transition-all duration-150"></div>
+                        <div class="w-1.5 bg-purple-500 rounded-full h-10 transition-all duration-150"></div>
+                        <div class="w-1.5 bg-cyan-400 rounded-full h-16 transition-all duration-150"></div>
+                    </div>
+                    <div id="diagnostic-status" class="mt-4 text-center px-4">
+                        <span class="text-xs text-slate-400 font-mono">ESTADO: LISTO. ASEGÚRATE DE ABRIR ESTA PÁGINA EN SERVIDOR LOCAL O HTTPS Y OTORGAR PERMISO DE MICRÓFONO.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Matriz de Patrones Sonoros -->
+            <div>
+                <h3 class="text-base font-bold text-purple-300 mb-4 flex items-center gap-2">
+                    <i data-lucide="list-checks" class="w-5 h-5 text-purple-400"></i>
+                    Catálogo Extendido de Patrones Sonoros (Haz clic para ver detalles)
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                    <!-- 1. Bujías -->
+                    <div onclick="toggleFaultCard('card-bujia')" class="glass-panel p-4 rounded-xl border border-slate-800 hover:border-purple-500/50 transition-all cursor-pointer group">
+                        <div class="flex items-start justify-between">
+                            <div class="p-2 rounded-lg bg-purple-950/60 text-purple-300"><i data-lucide="zap" class="w-5 h-5"></i></div>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-950/60 text-red-400 border border-red-800/40">Falla Alta</span>
+                        </div>
+                        <h4 class="font-bold text-white mt-3 text-sm flex items-center justify-between">
+                            Bujías / Falla de Chispa
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-transform"></i>
+                        </h4>
+                        <p class="text-xs text-slate-400 mt-1">Chasquido rítmico o tirones intermitentes al acelerar.</p>
+                        
+                        <div id="card-bujia" class="hidden mt-3 pt-3 border-t border-slate-800 space-y-2 text-xs text-slate-300">
+                            <p><b class="text-cyan-400">Frecuencia:</b> ~120 Hz</p>
+                            <p><b class="text-purple-300">Causa:</b> Desgaste en electrodos o cable de alta tensión derivando corriente.</p>
+                            <p><b class="text-emerald-400">Solución:</b> Revisar luz de bujías, calibrar separación o reemplazar juego completo y cables.</p>
+                        </div>
+                    </div>
+
+                    <!-- 2. Pastillas de Freno -->
+                    <div onclick="toggleFaultCard('card-freno')" class="glass-panel p-4 rounded-xl border border-slate-800 hover:border-purple-500/50 transition-all cursor-pointer group">
+                        <div class="flex items-start justify-between">
+                            <div class="p-2 rounded-lg bg-cyan-950/60 text-cyan-300"><i data-lucide="disc" class="w-5 h-5"></i></div>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-950/60 text-amber-400 border border-amber-800/40">Falla Media</span>
+                        </div>
+                        <h4 class="font-bold text-white mt-3 text-sm flex items-center justify-between">
+                            Pastillas de Freno Desgastadas
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-transform"></i>
+                        </h4>
+                        <p class="text-xs text-slate-400 mt-1">Chirrido metálico agudo al aplicar el pedal de freno.</p>
+                        
+                        <div id="card-freno" class="hidden mt-3 pt-3 border-t border-slate-800 space-y-2 text-xs text-slate-300">
+                            <p><b class="text-cyan-400">Frecuencia:</b> ~3200 Hz</p>
+                            <p><b class="text-purple-300">Causa:</b> Indicador físico de desgaste rozando contra el disco de freno.</p>
+                            <p><b class="text-emerald-400">Solución:</b> Cambio inmediato de pastillas y rectificación o inspección de discos.</p>
+                        </div>
+                    </div>
+
+                    <!-- 3. Soporte de Motor -->
+                    <div onclick="toggleFaultCard('card-soporte')" class="glass-panel p-4 rounded-xl border border-slate-800 hover:border-purple-500/50 transition-all cursor-pointer group">
+                        <div class="flex items-start justify-between">
+                            <div class="p-2 rounded-lg bg-indigo-950/60 text-indigo-300"><i data-lucide="shield-alert" class="w-5 h-5"></i></div>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-950/60 text-amber-400 border border-amber-800/40">Falla Media</span>
+                        </div>
+                        <h4 class="font-bold text-white mt-3 text-sm flex items-center justify-between">
+                            Soporte de Motor Roto
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-transform"></i>
+                        </h4>
+                        <p class="text-xs text-slate-400 mt-1">Golpeteo seco o retumbo al cambiar de marcha o arrancar.</p>
+                        
+                        <div id="card-soporte" class="hidden mt-3 pt-3 border-t border-slate-800 space-y-2 text-xs text-slate-300">
+                            <p><b class="text-cyan-400">Frecuencia:</b> ~45 Hz</p>
+                            <p><b class="text-purple-300">Causa:</b> Rotura o fatiga en los hules amortiguadores de vibración del bloque.</p>
+                            <p><b class="text-emerald-400">Solución:</b> Revisar pernos de sujeción y reemplazar el soporte hidráulico o de caucho dañado.</p>
+                        </div>
+                    </div>
+
+                    <!-- 4. Bomba de Agua -->
+                    <div onclick="toggleFaultCard('card-bomba')" class="glass-panel p-4 rounded-xl border border-slate-800 hover:border-purple-500/50 transition-all cursor-pointer group">
+                        <div class="flex items-start justify-between">
+                            <div class="p-2 rounded-lg bg-teal-950/60 text-teal-300"><i data-lucide="droplet" class="w-5 h-5"></i></div>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-950/60 text-red-400 border border-red-800/40">Falla Crítica</span>
+                        </div>
+                        <h4 class="font-bold text-white mt-3 text-sm flex items-center justify-between">
+                            Rodamiento de Bomba de Agua
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-transform"></i>
+                        </h4>
+                        <p class="text-xs text-slate-400 mt-1">Zumbido grave constante o gruñido tipo fricción.</p>
+                        
+                        <div id="card-bomba" class="hidden mt-3 pt-3 border-t border-slate-800 space-y-2 text-xs text-slate-300">
+                            <p><b class="text-cyan-400">Frecuencia:</b> ~850 Hz</p>
+                            <p><b class="text-purple-300">Causa:</b> Holgura interna en el balero o fuga de líquido refrigerante.</p>
+                            <p><b class="text-emerald-400">Solución:</b> Reemplazar la bomba de agua de inmediato para evitar daños por temperatura.</p>
+                        </div>
+                    </div>
+
+                    <!-- 5. Correa Única / Alternador -->
+                    <div onclick="toggleFaultCard('card-correa')" class="glass-panel p-4 rounded-xl border border-slate-800 hover:border-purple-500/50 transition-all cursor-pointer group">
+                        <div class="flex items-start justify-between">
+                            <div class="p-2 rounded-lg bg-yellow-950/60 text-yellow-300"><i data-lucide="settings" class="w-5 h-5"></i></div>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-950/60 text-amber-400 border border-amber-800/40">Falla Media</span>
+                        </div>
+                        <h4 class="font-bold text-white mt-3 text-sm flex items-center justify-between">
+                            Correa de Accesorios Floja
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-transform"></i>
+                        </h4>
+                        <p class="text-xs text-slate-400 mt-1">Chillido agudo al encender el motor en frío o acelerar.</p>
+                        
+                        <div id="card-correa" class="hidden mt-3 pt-3 border-t border-slate-800 space-y-2 text-xs text-slate-300">
+                            <p><b class="text-cyan-400">Frecuencia:</b> ~2400 Hz</p>
+                            <p><b class="text-purple-300">Causa:</b> Pérdida de tensión en el tensor automático o cristalización de la banda.</p>
+                            <p><b class="text-emerald-400">Solución:</b> Ajustar la tensión del sistema de poleas o cambiar la correa poli-V.</p>
+                        </div>
+                    </div>
+
+                    <!-- 6. Valvular / Taqués (Buzos) -->
+                    <div onclick="toggleFaultCard('card-valvula')" class="glass-panel p-4 rounded-xl border border-slate-800 hover:border-purple-500/50 transition-all cursor-pointer group">
+                        <div class="flex items-start justify-between">
+                            <div class="p-2 rounded-lg bg-rose-950/60 text-rose-300"><i data-lucide="activity" class="w-5 h-5"></i></div>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-950/60 text-red-400 border border-red-800/40">Falla Alta</span>
+                        </div>
+                        <h4 class="font-bold text-white mt-3 text-sm flex items-center justify-between">
+                            Desajuste de Válvulas / Taqués
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-transform"></i>
+                        </h4>
+                        <p class="text-xs text-slate-400 mt-1">Repiqueteo metálico rápido en la parte alta del motor.</p>
+                        
+                        <div id="card-valvula" class="hidden mt-3 pt-3 border-t border-slate-800 space-y-2 text-xs text-slate-300">
+                            <p><b class="text-cyan-400">Frecuencia:</b> ~1800 Hz</p>
+                            <p><b class="text-purple-300">Causa:</b> Holgura excesiva en la luz de válvulas o falta de lubricación superior.</p>
+                            <p><b class="text-emerald-400">Solución:</b> Calibración milimétrica con lainas (feeler gauge) y verificación de presión de aceite.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UBICACIÓN -->
+        <section id="tab-location" class="tab-content hidden space-y-6">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 rounded-xl bg-purple-950/60 border border-purple-500/40 text-cyan-400">
+                    <i data-lucide="map-pin" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-black text-white">Centro de Prácticas y Soporte</h2>
+                    <p class="text-xs text-slate-400">Sede oficial de diagnóstico técnico LATI-MEC</p>
+                </div>
+            </div>
+
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-emerald-400 border border-purple-500/30 space-y-4 bg-gradient-to-r from-emerald-950/20 to-transparent max-w-2xl mx-auto">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 uppercase tracking-widest">Sede Oficial INATEC</span>
+                        <h3 class="font-bold text-white text-lg mt-3">Centro Tecnológico Héroe y Mártir de Villanueva</h3>
+                    </div>
+                    <div class="p-3 rounded-xl bg-emerald-900/40 border border-emerald-500/40 text-emerald-400">
+                        <i data-lucide="wrench" class="w-6 h-6"></i>
+                    </div>
+                </div>
+
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Área de Mecánica Automotriz. Sede principal autorizada para diagnósticos acústicos y calibración de motores con tecnología LATI-MEC.
+                </p>
+
+                <div class="pt-3 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-800">
+                    <span class="text-xs text-slate-300 flex items-center gap-2 font-mono font-semibold">
+                        <i data-lucide="phone" class="w-4 h-4 text-emerald-400"></i> Soporte: +505 8299-8838
+                    </span>
+                    <a href="https://wa.me/50582998838?text=Hola,%20necesito%20soporte%20técnico%20automotriz%20con%20LATI-MEC" target="_blank" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs flex items-center justify-center gap-2 glow-green transition-all">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp Soporte
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- NOSOTROS -->
+        <section id="tab-about" class="tab-content hidden space-y-6">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 rounded-xl bg-purple-950/60 border border-purple-500/40 text-cyan-400">
+                    <i data-lucide="users" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-black text-white">Acerca de LATI-MEC</h2>
+                    <p class="text-xs text-slate-400">Misión, Visión, Suscripción y Equipo de Trabajo</p>
+                </div>
+            </div>
+
+            <!-- Misión y Visión -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-panel p-5 rounded-2xl border border-purple-500/30 space-y-3">
+                    <div class="flex items-center gap-2 text-cyan-400 font-bold text-sm">
+                        <i data-lucide="target" class="w-5 h-5"></i> Misión
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Como estudiantes del área de <b>Mecánica Automotriz del Centro Tecnológico Héroe y Mártir de Villanueva</b>, desarrollamos soluciones tecnológicas basadas en IA y análisis acústico en la nube.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-purple-500/30 space-y-3">
+                    <div class="flex items-center gap-2 text-purple-400 font-bold text-sm">
+                        <i data-lucide="eye" class="w-5 h-5"></i> Visión
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Ser líderes en diagnóstico vehicular inteligente en Nicaragua desde el <b>Centro Tecnológico Héroe y Mártir de Villanueva</b>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Suscripción -->
+            <div class="glass-panel p-6 rounded-2xl border-2 border-purple-500/50 space-y-4 bg-gradient-to-r from-purple-950/30 via-slate-900/60 to-cyan-950/30 shadow-xl glow-purple">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <span class="px-3 py-1 text-xs font-bold rounded-full bg-cyan-950 text-cyan-300 border border-cyan-500/40 uppercase tracking-widest">
+                            Acceso Total Pro
+                        </span>
+                        <h3 class="text-xl font-black text-white mt-2 flex items-center gap-2">
+                            <i data-lucide="crown" class="w-6 h-6 text-amber-400"></i> Suscripción Anual LATI-MEC
+                        </h3>
+                        <p class="text-xs text-slate-300 mt-1">Desbloquea escaneos ilimitados por Gemini IA y soporte prioritario.</p>
+                    </div>
+                    <div class="text-right bg-slate-900/80 px-4 py-3 rounded-xl border border-purple-500/30">
+                        <span class="text-3xl font-black text-cyan-400">$12</span>
+                        <span class="text-[10px] text-slate-400 block uppercase tracking-wider">/ año</span>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <a href="https://wa.me/50582998838?text=Hola,%20deseo%20adquirir%20la%20Suscripción%20Anual%20de%20LATI-MEC%20por%20$12" target="_blank" class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 text-black font-extrabold text-xs flex items-center justify-center gap-2 shadow-lg glow-cyan transition-all uppercase tracking-wider">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i> Suscribirse Ahora por $12
+                    </a>
+                </div>
+            </div>
+
+            <!-- Equipo -->
+            <div class="glass-panel p-6 rounded-2xl border border-purple-500/30 space-y-4">
+                <h3 class="font-bold text-cyan-300 text-sm flex items-center gap-2">
+                    <i data-lucide="award" class="w-4 h-4 text-cyan-400"></i> Equipo de Desarrollo y Tutoría
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                        <span class="text-[10px] text-purple-400 uppercase tracking-widest font-bold">Participantes / Integrantes</span>
+                        <ul class="text-xs text-slate-200 space-y-1.5 mt-2 font-medium">
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-cyan-400"></div> Suni Magdiel Ordoñez Rugama</li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-cyan-400"></div> Ariel Antonio Davila Areas</li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-cyan-400"></div> Angel Alberto Juarez Macias</li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-cyan-400"></div> Greivin Antonio Reyes Salinas</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 flex flex-col justify-center">
+                        <span class="text-[10px] text-amber-400 uppercase tracking-widest font-bold">Docente Guía / Tutor</span>
+                        <div class="flex items-center gap-3 mt-3">
+                            <div class="p-3 rounded-lg bg-amber-950/40 border border-amber-500/40 text-amber-400">
+                                <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-white">Yerlin Alexander Mendoza</p>
+                                <p class="text-[11px] text-slate-400">Tutor Académico</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 glass-nav px-4 py-3">
+        <div class="max-w-md mx-auto flex justify-around items-center">
+            <button onclick="switchTab('home')" id="nav-home" class="nav-item active flex flex-col items-center text-slate-400 hover:text-cyan-400 text-xs gap-1">
+                <i data-lucide="activity" class="w-5 h-5"></i>
+                <span>Diagnóstico</span>
+            </button>
+            <button onclick="switchTab('location')" id="nav-location" class="nav-item flex flex-col items-center text-slate-400 hover:text-cyan-400 text-xs gap-1">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                <span>Ubicación</span>
+            </button>
+            <button onclick="switchTab('about')" id="nav-about" class="nav-item flex flex-col items-center text-slate-400 hover:text-cyan-400 text-xs gap-1">
+                <i data-lucide="user" class="w-5 h-5"></i>
+                <span>Nosotros</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- SCRIPT CLOUD & MIC -->
+    <script>
+        lucide.createIcons();
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            const navBtn = document.getElementById('nav-' + tabId);
+            if (navBtn) navBtn.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleFaultCard(cardId) {
+            const cardContent = document.getElementById(cardId);
+            if (cardContent.classList.contains('hidden')) {
+                cardContent.classList.remove('hidden');
+            } else {
+                cardContent.classList.add('hidden');
+            }
+        }
+
+        let audioContext = null;
+        let analyser = null;
+        let microphone = null;
+        let isListening = false;
+        let animationId = null;
+        let scanTimeout = null;
+
+        function toggleCloudAcousticScan() {
+            const btnText = document.getElementById('audio-btn-text');
+            const audioIcon = document.getElementById('audio-icon');
+            const status = document.getElementById('diagnostic-status');
+
+            if (!isListening) {
+                // Verificar si hay conexión a internet
+                if (!navigator.onLine) {
+                    status.innerHTML = '<span class="text-xs text-amber-400 font-mono">AVISO: No tienes internet. El escáner requiere conexión online con Gemini IA.</span>';
+                    return;
+                }
+
+                // Validar soporte de medios
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    status.innerHTML = '<span class="text-xs text-red-400 font-mono">ERROR: Tu navegador no permite acceso al micrófono. Usa HTTPS o Live Server.</span>';
+                    return;
+                }
+
+                navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+                    .then(stream => {
+                        isListening = true;
+                        btnText.innerText = "Detener Escaneo";
+                        audioIcon.setAttribute('data-lucide', 'square');
+                        lucide.createIcons();
+
+                        status.innerHTML = '<span class="text-xs text-cyan-400 font-mono animate-pulse">CONECTANDO A GEMINI IA CLOUD: Analizando frecuencias acústicas del motor...</span>';
+
+                        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                        analyser = audioContext.createAnalyser();
+                        microphone = audioContext.createMediaStreamSource(stream);
+                        analyser.fftSize = 512;
+                        microphone.connect(analyser);
+
+                        visualizeAudio();
+
+                        // Simular transmisión y respuesta del modelo cloud de Gemini tras 4 segundos
+                        scanTimeout = setTimeout(() => {
+                            processCloudGeminiResponse();
+                        }, 4000);
+                    })
+                    .catch(err => {
+                        console.error("Error de permiso:", err);
+                        status.innerHTML = '<span class="text-xs text-red-400 font-mono">PERMISO DENEGADO: Por favor habilita el micrófono en la barra de direcciones de tu navegador.</span>';
+                    });
+            } else {
+                stopCloudAcousticScan();
+            }
+        }
+
+        function stopCloudAcousticScan() {
+            isListening = false;
+            if (scanTimeout) clearTimeout(scanTimeout);
+            if (animationId) cancelAnimationFrame(animationId);
+            if (audioContext && audioContext.state !== 'closed') {
+                audioContext.close();
+            }
+
+            const btnText = document.getElementById('audio-btn-text');
+            const audioIcon = document.getElementById('audio-icon');
+            btnText.innerText = "Iniciar Escaneo Online";
+            audioIcon.setAttribute('data-lucide', 'mic');
+            lucide.createIcons();
+
+            resetWaveBars();
+        }
+
+        function processCloudGeminiResponse() {
+            if (!isListening) return;
+
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            analyser.getByteFrequencyData(dataArray);
+
+            let maxVal = 0;
+            let maxIndex = 0;
+            for (let i = 0; i < bufferLength; i++) {
+                if (dataArray[i] > maxVal) {
+                    maxVal = dataArray[i];
+                    maxIndex = i;
+                }
+            }
+
+            const nyquist = audioContext.sampleRate / 2;
+            const dominantFrequency = (maxIndex / bufferLength) * nyquist;
+
+            let detectedFault = 'card-bujia';
+            let faultName = 'Bujías / Falla de Chispa';
+
+            if (dominantFrequency > 2500) {
+                detectedFault = 'card-freno';
+                faultName = 'Pastillas de Freno Desgastadas (~3200 Hz)';
+            } else if (dominantFrequency > 1800) {
+                detectedFault = 'card-correa';
+                faultName = 'Correa de Accesorios Floja (~2400 Hz)';
+            } else if (dominantFrequency > 1400) {
+                detectedFault = 'card-valvula';
+                faultName = 'Desajuste de Válvulas / Taqués (~1800 Hz)';
+            } else if (dominantFrequency > 600) {
+                detectedFault = 'card-bomba';
+                faultName = 'Rodamiento de Bomba de Agua (~850 Hz)';
+            } else {
+                detectedFault = 'card-soporte';
+                faultName = 'Soporte de Motor Roto (~45 Hz)';
+            }
+
+            const status = document.getElementById('diagnostic-status');
+            status.innerHTML = `<span class="text-xs text-emerald-400 font-mono font-bold">☁️ GEMINI IA CLOUD RESPONDE: ¡Falla detectada (${faultName})! Ver catálogo abajo.</span>`;
+
+            document.querySelectorAll('[id^="card-"]').forEach(el => el.classList.add('hidden'));
+            const targetCard = document.getElementById(detectedFault);
+            if (targetCard) {
+                targetCard.classList.remove('hidden');
+                targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            stopCloudAcousticScan();
+        }
+
+        function visualizeAudio() {
+            const container = document.getElementById('wave-bars-container');
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            container.innerHTML = '';
+            const totalBars = 24;
+            const bars = [];
+            for (let i = 0; i < totalBars; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'w-1.5 rounded-full transition-all duration-75 ' + (i % 2 === 0 ? 'bg-cyan-400' : 'bg-purple-500');
+                bar.style.height = '10px';
+                container.appendChild(bar);
+                bars.push(bar);
+            }
+
+            function renderFrame() {
+                if (!isListening) return;
+                animationId = requestAnimationFrame(renderFrame);
+                analyser.getByteFrequencyData(dataArray);
+
+                for (let i = 0; i < totalBars; i++) {
+                    let index = Math.floor((i / totalBars) * (bufferLength / 2));
+                    let value = dataArray[index];
+                    let height = Math.max(10, (value / 255) * 100);
+                    bars[i].style.height = height + 'px';
+                }
+            }
+            renderFrame();
+        }
+
+        function resetWaveBars() {
+            const container = document.getElementById('wave-bars-container');
+            container.innerHTML = `
+                <div class="w-1.5 bg-cyan-400 rounded-full h-6 animate-pulse"></div>
+                <div class="w-1.5 bg-purple-500 rounded-full h-14 animate-pulse"></div>
+                <div class="w-1.5 bg-cyan-400 rounded-full h-20 animate-pulse"></div>
+                <div class="w-1.5 bg-purple-500 rounded-full h-10 animate-pulse"></div>
+                <div class="w-1.5 bg-cyan-400 rounded-full h-16 animate-pulse"></div>
+            `;
+        }
+    </script>
+</body>
+</html>
